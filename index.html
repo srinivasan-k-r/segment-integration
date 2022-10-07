@@ -163,6 +163,20 @@
         </ul>
 
         <p>Hopefully you learned something new here. See you next time!</p>
+
+        <form name="form" onsubmit="identify(event)">
+          <br><br><br>
+          <br><br> Name: <input name="fullname" size="75" type="text" />
+          <br><br> Email: <input name="email" size="75" type="email" />
+          <br><br> Job Title: <input name="title" size="75" type="text" />
+          <br><br> Company Name: <input name="comp_name" size="75" type="text" />
+          <br><br> Phone: <input name="phone" size="75" type="text" />
+          <br><br> Rating: <input name="rating" size="75" type="text" />
+          <br><br>Any other relevant info about your company?
+          <br><br>
+          <br><br<br><input name="submit" type="submit" value="submit" />
+      </form>
+
       </article>
 
       <aside>
@@ -204,4 +218,41 @@
       </footer>
     </div>
   </body>
+  <script>
+    function identify(e) {
+      e.preventDefault();
+      var form = e.target;
+      var email = form["email"].value;
+      var title = form["title"].value;
+      var comp_name = form["comp_name"].value;
+      var fullname = form["fullname"].value;
+      var phone = form["phone"].value;
+
+      var rating = form["rating"].value
+      var rn = Math.floor((Math.random() * 1000000) + 1);
+
+      analytics.identify(12345, {
+          email: email,
+          title: title,
+          leadSource: 'Newsletter',
+          is_first_session: 'true',
+          clicked_random_link: 'true',
+          viewed_product: 'true',
+          company: {
+              name: comp_name
+          },
+          name: fullname,
+          category: 'Marketing',
+          phone: phone,
+      }, {
+          'integrations': {
+              'Salesforce': true
+          }
+      });
+
+      analytics.track('Form Submitted', {
+          type: "Lead Generation",
+      });
+    }
+  </script>
 </html>
